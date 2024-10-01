@@ -81,7 +81,7 @@ jobs:
         version: v1.31.0
     - name: Update kubeconfig
       run: |
-        aws eks update-kubeconfig --name eks-cluster --region ap-south-1
+        aws eks update-kubeconfig --name project-cluster --region ap-south-1
 
     - name: Deploy to EKS
       env:
@@ -89,8 +89,8 @@ jobs:
         ECR_REPOSITORY: githubproject
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        kubectl apply -f deployment.yaml --validate=false
-        kubectl apply -f service.yaml --validate=false
+        kubectl apply -f deployment.yaml
+        kubectl apply -f service.yaml 
 
 
    
