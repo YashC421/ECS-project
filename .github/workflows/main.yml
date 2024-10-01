@@ -82,5 +82,17 @@ jobs:
     - name: Update kubeconfig
       run: |
         aws eks update-kubeconfig --name eks-cluster --region ap-south-1
- 
+
+    - name: Deploy to EKS
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: githubproject
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        kubectl apply -f deployment.yaml
+        kubectl apply -f service.yaml
+
+
+   
+        
   
