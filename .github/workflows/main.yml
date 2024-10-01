@@ -76,7 +76,7 @@ jobs:
          docker push 841515711664.dkr.ecr.ap-south-1.amazonaws.com/githubproject:latest
 
     - name: Set up kubectl
-      uses: aws-actions/setup-kubectl@v1
+      uses: azure/setup-kubectl@v1
       with:
         version: v1.31.0
     - name: Update kubeconfig
