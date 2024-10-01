@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project
+  labels:
+     app: github-project
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: github-project
+
+  template:
+    metadata:
+      labels:
+        app: github-project
+    spec:
+      containers:
+      - name: github-project
+        image: 841515711664.dkr.ecr.ap-south-1.amazonaws.com/githubproject:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
