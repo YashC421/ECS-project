@@ -74,3 +74,13 @@ jobs:
     - name: Push Docker image to ECR
       run: |
          docker push 841515711664.dkr.ecr.ap-south-1.amazonaws.com/githubproject:latest
+
+    - name: Set up kubectl
+      uses: aws-actions/setup-kubectl@v1
+      with:
+        version: v1.31.0
+    - name: Update kubeconfig
+      run: |
+        aws eks update-kubeconfig --name eks-cluster --region ap-south-1
+ 
+  
