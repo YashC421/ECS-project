@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: project-service
+  labels:
+    app: github-project
+spec:
+  selector:
+    app: github-project
+
+  ports:
+    - port: 8080
+      targetPort: 8080
+
+  type: LoadBalancer
