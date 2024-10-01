@@ -89,8 +89,8 @@ jobs:
         ECR_REPOSITORY: githubproject
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        kubectl apply -f deployment.yaml
-        kubectl apply -f service.yaml 
+        kubectl rollout restart deployment/project
+
 
 
    
