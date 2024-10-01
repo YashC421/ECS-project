@@ -75,24 +75,21 @@ jobs:
       run: |
          docker push 841515711664.dkr.ecr.ap-south-1.amazonaws.com/githubproject:latest
 
-    - name: Set up kubectl
-      uses: azure/setup-kubectl@v1
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        version: v1.31.0
-    - name: Update kubeconfig
-      run: |
-        aws eks update-kubeconfig --name project-cluster --region ap-south-1
-
-    - name: Deploy to EKS
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: githubproject
-        IMAGE_TAG: ${{ github.sha }}
-      run: |
-        kubectl rollout restart deployment/project
-
-
-
+          task-definition: ecs-deployment.json
+          container-name: ecs-container
+          image: ${{ steps.build-image.outputs.image }}    
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ecs-service
+          cluster: ecs-cluster
+          wait-for-service-stability: true
+    
    
         
   
